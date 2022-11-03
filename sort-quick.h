@@ -1,0 +1,1 @@
+void quick_sort (int **vetor, int ini, int fim);

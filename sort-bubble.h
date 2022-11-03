@@ -1,0 +1,1 @@
+void bubble_sort (int** vetor, int n, int* comparacoes, int* trocas);
