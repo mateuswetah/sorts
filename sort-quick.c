@@ -1,37 +1,47 @@
 #include "sort-selection.h"
 #include "troca.h"
 
-int particiona_quick (int **vetor, int ini, int fim)
+int particiona_quick (int **vetor, int inicio, int fim, int* comparacoes, int* trocas)
 {
-	int chave, i, j;
 
-	chave = (*vetor)[fim];
-	i = ini - 1;
+	int pivo = (*vetor)[inicio];
+	int esq = inicio;
+	int dir = fim;
 
-	for (j = ini; j <= fim - 1; j++)
-	{
-		if ((*vetor)[j] <= chave)
-		{
-			i++;
-			troca(&(*vetor)[j], &(*vetor)[i]);
+	while (esq < dir) {
+		*comparacoes = *comparacoes + 1;
+
+		while ( (*vetor)[esq] <= pivo ) {
+			*comparacoes = *comparacoes + 1;
+			esq++;
 		}
-	} 
+		while ( (*vetor)[dir] > pivo ) {
+			*comparacoes = *comparacoes + 1;
+			dir--;
+		}
 
-	troca(&(*vetor)[fim], &(*vetor)[i+1]);
+		*comparacoes = *comparacoes + 1;
+		if (esq < dir) {
+			troca(&(*vetor)[esq], &(*vetor)[dir]);
+			*trocas = *trocas + 1;
+		}
+	}
 
-	return (i + 1);
+	troca(&(*vetor)[inicio], &(*vetor)[dir]);
+	*trocas = *trocas + 1;
+
+	return dir;
 
 }
 
-void quick_sort (int **vetor, int ini, int fim)
+void quick_sort (int **vetor, int inicio, int fim, int* comparacoes, int* trocas)
 {
-	int chave;
 
-	if (ini < fim)
+	if (inicio < fim)
 	{
-		chave = particiona_quick(vetor, ini, fim);
-		quick_sort(vetor, ini, chave - 1);
-		quick_sort(vetor, chave + 1, fim);
+		int p = particiona_quick(vetor, inicio, fim, comparacoes, trocas);
+		quick_sort(vetor, inicio, p - 1, comparacoes, trocas);
+		quick_sort(vetor, p + 1, fim, comparacoes, trocas);
 	}
 
 	return;

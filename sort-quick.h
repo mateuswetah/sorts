@@ -1,1 +1,1 @@
-void quick_sort (int **vetor, int ini, int fim);
+void quick_sort (int** vetor, int ini, int fim, int* comparacoes, int* trocas);

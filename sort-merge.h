@@ -1,0 +1,1 @@
+void merge_sort (int **vetor, int ini, int fim, int* comparacoes, int* trocas);

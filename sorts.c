@@ -20,6 +20,7 @@
 #include "sort-selection.h"
 #include "sort-shell.h"
 #include "sort-quick.h"
+#include "sort-merge.h"
 #include "sort-heap.h"
 
 // Preenche o vetor com valores randomicos
@@ -65,50 +66,57 @@ int main ()
 
 	// Cria um vetor deste tamanho e preenche aleatoriamente
 	vetor = (int*) malloc(n * sizeof(int));
-	gera_vetor_rand(&vetor, n);
-	printf("Vetor gerado: ");
-	imprime_vetor(&vetor, n);
 
-	// Escolhe qual o tipo de ordenacao
-	printf("\nEscolha um método de ordenação: \n");
-	printf("1 - Bubble | 2 - Selection | 3 - Insertion \n4 - Shell | 5 - Quick | 6 - Heap\n");
-	scanf("%d", &metodo);
+	if (vetor != NULL) {
+		gera_vetor_rand(&vetor, n);
+		printf("Vetor gerado: ");
+		imprime_vetor(&vetor, n);
 
- 	// Regiao de custo, medimos o tempo
-	inicio = clock();
+		// Escolhe qual o tipo de ordenacao
+		printf("\nEscolha um método de ordenação: \n");
+		printf("1 - Bubble | 2 - Selection | 3 - Insertion | 4 - Shell \n5 - Merge | 6 - Quick | 7 - Heap\n");
+		scanf("%d", &metodo);
 
-	switch (metodo)
-	{
-		case 2: selection_sort(&vetor, n, &comparacoes, &trocas);
-		break;
-		case 3: insertion_sort(&vetor, n, &comparacoes, &trocas);
-		break;
-		case 4: shell_sort(&vetor, n);
-		break;
-		case 5: quick_sort(&vetor, 0, n - 1);
-		break;
-		case 6: heap_sort(&vetor, n);
-		break;
-		case 1: bubble_sort(&vetor, n, &comparacoes, &trocas);
-		default:
-		break;
+		// Regiao de custo, medimos o tempo
+		inicio = clock();
+
+		switch (metodo)
+		{
+			case 2: selection_sort(&vetor, n, &comparacoes, &trocas);
+			break;
+			case 3: insertion_sort(&vetor, n, &comparacoes, &trocas);
+			break;
+			case 4: shell_sort(&vetor, n);
+			break;
+			case 5: merge_sort(&vetor, 0, n - 1, &comparacoes, &trocas);
+			break;
+			case 6: quick_sort(&vetor, 0, n - 1, &comparacoes, &trocas);
+			break;
+			case 7: heap_sort(&vetor, n);
+			break;
+			case 1: bubble_sort(&vetor, n, &comparacoes, &trocas);
+			default:
+			break;
+		}
+
+		fim = clock();
+
+		// Fim da regiao de custo
+		printf("Vetor ordenado: ");
+		imprime_vetor(&vetor, n);
+
+		tempo_gasto = (double)(fim - inicio)/CLOCKS_PER_SEC;
+		printf("\nTempo = %lfs\n", tempo_gasto);
+
+		// Se passado, mostra quantas comparacores foram feitas
+		if ( comparacoes )
+			printf("\nComparações = %d\n", comparacoes);
+		
+		// Se passado, mostra quantas trocas foram feitas
+		if ( trocas )
+			printf("\nTrocas = %d\n", trocas);
 	}
-
-	fim = clock();
-
-	// Fim da regiao de custo
-	printf("Vetor ordenado: ");
-	imprime_vetor(&vetor, n);
-
-	tempo_gasto = (double)(fim - inicio)/CLOCKS_PER_SEC;
-	printf("\nTempo = %lfs\n", tempo_gasto);
-
-	if ( comparacoes )
-		printf("\nComparações = %d\n", comparacoes);
 	
-	if ( trocas )
-		printf("\nTrocas = %d\n", trocas);
-
 	// Libera vetor
 	free(vetor);
 

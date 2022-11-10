@@ -33,6 +33,17 @@ void selection_sort (int** vetor, int n, int* comparacoes, int* trocas)
 			
 			*trocas = *trocas + 1;
 		}
+
+	/* Alternativa estavel, porem menos eficiente */
+	/*
+		int chave = (*vetor)[menor];
+        while (menor > i)
+        {
+            (*vetor)[menor] = (*vetor)[menor - 1];
+            menor--;
+        }
+        (*vetor)[i] = chave;
+	*/
 	}
 
 	return;
