@@ -3,7 +3,7 @@
  * @author 	  Mateus Machado Luna (mateus_m_luna@ufg.br)
  * @brief 	  Este código foi feito para testar diferentes algorigmos de ordenacao.
  * 			  Como o codigo das ordenacoes esta em funcoes separadas, voce deve
- * 			  compilar este código usando: gcc -o sorts sorts.c sort-*.c
+ * 			  compilar este código usando: gcc -o sorts sorts.c sort-*.c troca.c
  * @version   0.1
  * @date 	  2022-10-29
  * @copyright Copyleft 2022
